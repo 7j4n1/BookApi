@@ -8,6 +8,9 @@ namespace BookApi
     /// </summary>
     public class ConnectionHelper
     {
+        /// <summary>
+        /// Helper class for managing Redis connection.
+        /// </summary>
         static ConnectionHelper()
         {
             ConnectionHelper.lazyConn = new Lazy<ConnectionMultiplexer>(() =>
