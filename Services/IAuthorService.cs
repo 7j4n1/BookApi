@@ -1,20 +1,21 @@
 using BookApi.Models;
 
-namespace BookApi;
-
-public interface IAuthorService
+namespace BookApi.Services
 {
-    // Get all Authors
-    public IEnumerable<Author> GetAuthors();
-    // Get Author By Id
-    public Author GetAuthorById(int id);
-    // Add New Author Info
-    public Author AddAuthor(Author author);
-    // Update Author Info
-    public Author UpdateAuthor(int id);
-    // Delete Author Info from DB
-    public bool DeleteAuthor(int id);
+    public interface IAuthorService
+    {
+        // Get all Authors
+        Task<IEnumerable<Author>> GetAuthors();
+        // Get Author By Id
+        Task <Author?> GetAuthorById(int id);
+        // Add New Author Info
+        Task <Author?> AddAuthor(Author author);
+        // Update Author Info
+        Task<Author?> UpdateAuthor(Author author);
+        // Delete Author Info from DB
+        Task<bool> DeleteAuthor(int id);
 
 
 
+    }
 }
