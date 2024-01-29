@@ -10,5 +10,14 @@ namespace BookApi
         public DbSet<Author> Authors { get; set; }
 
         public DbSet<Publisher> Publishers { get; set; }
+
+        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Author>().ToTable("Author");
+            modelBuilder.Entity<Book>().ToTable("Book");
+            modelBuilder.Entity<Publisher>().ToTable("Publisher");
+        }
     }
 }

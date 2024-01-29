@@ -1,4 +1,5 @@
-﻿using BookApi.Models;
+﻿using System.Security.Cryptography.X509Certificates;
+using BookApi.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
@@ -78,8 +79,9 @@ namespace BookApi.Services
         /// <returns>An asynchronous operation that returns a collection of Author objects.</returns>
         public async Task<IEnumerable<Author>> GetAuthors()
         {
-            // return the list of Authors | return [.. _libraryDB.Authors]
-            return await _libraryDB.Authors.ToListAsync();
+            // Return the list of authors, along with their associated books
+            Task<List<Author>> task = _libraryDB.Authors.Include(x => x.Books).ToListAsync();
+            return await task;
         }
 
         // Update the author with the specified ID
