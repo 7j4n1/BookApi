@@ -8,6 +8,6 @@ public class Author: BaseAttr
 
     public string? Bio {get; set;}
 
-    public required ICollection<Book> Books { get; set; }
+    public ICollection<Book>? Books { get; set; }
 
 }
