@@ -159,7 +159,7 @@ namespace MyApp.Namespace
 
                     return new ObjectResult(new ApiError () {Message = $"Author with the id ({id}) deleted successfully"})
                     {
-                        StatusCode = StatusCodes.Status204NoContent
+                        StatusCode = StatusCodes.Status200OK
                     };
                 }
 
