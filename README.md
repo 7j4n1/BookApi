@@ -1,6 +1,6 @@
-# Simple CRUD API Documentation
+# Simple Library CRUD API Documentation
 
-Welcome to the CRUD API documentation Laravel application. This API allows you to create, read, update, and delete person records.
+Welcome to the Simple Library CRUD API documentation application. This API allows restful operations on Books, Authors & Publisher Information.
 
 ## Table of Contents
 
