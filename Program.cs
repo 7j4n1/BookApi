@@ -28,6 +28,7 @@ public class Program()
         builder.Services.AddScoped<IBookService, BookService>();
         builder.Services.AddScoped<IPublisherHelper, PublisherService>();
         builder.Services.AddScoped<IPublisherService, PublisherService>();
+        builder.Services.AddScoped<IMessageProducer, RabbitMQProducer>();
 
         builder.Services.Configure<RequestLocalizationOptions>(options =>
         {
