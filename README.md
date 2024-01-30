@@ -74,6 +74,7 @@ Before you start, make sure you have the following prerequisites installed on yo
 ### Request and Response Formats
 The API uses JSON for both requests and responses. The following table describes the JSON format for the requests and responses:
 
+### Books
 <table>
     <thead>
         <th> Requests </th>
@@ -81,49 +82,134 @@ The API uses JSON for both requests and responses. The following table describes
     </thead>
     <tbody>
         <tr>
-            <td>POST /api</td>
-            <td>201 Created with the newly created person in the response body</td>
+            <td>POST /api/v1/Books</td>
+            <td>201 Created with the newly created book in the response body</td>
         </tr>
         <tr>
-            <td>GET /api</td>
-            <td>200 OK with an array of people in the response body.</td>
+            <td>GET /api/v1/Books</td>
+            <td>200 OK with an array of Books in the response body.</td>
         </tr>
         <tr>
-            <td>GET /api/{id}</td>
-            <td>200 OK with the person with the specified id in the response body.</td>
+            <td>GET /api/v1/Books/{id}</td>
+            <td>200 OK with the book with the specified id in the response body.</td>
         </tr>
         <tr>
-            <td>PUT /api/{id}</td>
-            <td>200 OK with the updated person in the response body.</td>
+            <td>PUT /api/v1/Books/{id}</td>
+            <td>200 OK with the updated book in the response body.</td>
         </tr>
         <tr>
-            <td>PATCH /api/{id}</td>
-            <td>200 OK with the updated person in the response body.</td>
+            <td>DELETE /api/v1/Books/{id}</td>
+            <td>204 No Content</td>
+        </tr>
+    </tbody>
+</table>
+### Author
+<table>
+    <thead>
+        <th> Requests </th>
+        <th> Response </th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>POST /api/v1/Authors</td>
+            <td>201 Created with the newly created author in the response body</td>
         </tr>
         <tr>
-            <td>DELETE /api/{id}</td>
+            <td>GET /api/v1/Authors</td>
+            <td>200 OK with an array of Authors in the response body.</td>
+        </tr>
+        <tr>
+            <td>GET /api/v1/Authors/{id}</td>
+            <td>200 OK with the author with the specified id in the response body.</td>
+        </tr>
+        <tr>
+            <td>PUT /api/v1/Authors/{id}</td>
+            <td>200 OK with the updated author in the response body.</td>
+        </tr>
+        <tr>
+            <td>DELETE /api/v1/Authors/{id}</td>
+            <td>204 No Content</td>
+        </tr>
+    </tbody>
+</table>
+### Publisher
+<table>
+    <thead>
+        <th> Requests </th>
+        <th> Response </th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>POST /api/v1/Publishers</td>
+            <td>201 Created with the newly created publisher in the response body</td>
+        </tr>
+        <tr>
+            <td>GET /api/v1/Publishers</td>
+            <td>200 OK with an array of Publishers in the response body.</td>
+        </tr>
+        <tr>
+            <td>GET /api/v1/Publishers/{id}</td>
+            <td>200 OK with the publisher with the specified id in the response body.</td>
+        </tr>
+        <tr>
+            <td>PUT /api/v1/Publishers/{id}</td>
+            <td>204 OK with no content</td>
+        </tr>
+        <tr>
+            <td>DELETE /api/v1/Publishers/{id}</td>
             <td>204 No Content</td>
         </tr>
     </tbody>
 </table>
 
+### Notification
+
+<table>
+    <thead>
+        <th> Requests </th>
+        <th> Response </th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET /api/v1/Notification</td>
+            <td>200 OK with a single notification fetched from the Queue Consumer in the response body.</td>
+        </tr>
+    </tbody>
+</table>
+
+### Note
+
+Once a new Book is uploaded from the /Books enpoint, The RabbitMQ Producer publish the new book info and a message "New book has been published" to the Queue
+and the Notification enpoint uses an async Class Method to get consume the message from the queue through the route "new_book".
+
+And if no new Book published, the Nofitication return "No new book published"
+
 ### Sample Usage
 
-## Adding a new person (201 Created)
+## No Nofication available
 
-<img src="samples/create.png" alt="Create new person" />
+<img src="sample/no-notification.png" alt="No New Notification">
 
-## Fetch the details of a person (200 OK)
+## Adding a new Book (201 Created)
 
-<img src="samples/read.png" alt="fetch the details of a person" />
+<img src="sample/newbook.png" alt="Create new Book" />
+<img src="sample/server-res.png" alt="Response new Book" />
 
-## Modify the details of an existing person (200 OK)
+## The details of the new Book posted
+<img src="sample/not.png" alt="New Notification">
 
-<img src="samples/update.png" alt="modify the details of an existing person" />
+## Fetch the details of a author (200 OK)
 
-## Remove a person (204 No Content)
+<img src="sample/fetch-author.png" alt="fetch the details of a author" />
 
-<img src="samples/delete.png" alt="remove a person" />
+## Modify the details of an existing publisher (204)
+
+<img src="sample/mod-pub.png" alt="modify the details of an existing publisher" />
+<img src="sample/mod1.png" alt="modify the details of an existing publisher" />
+
+## RabbitMQ Management Dashboard
+<img src="sample/queue.png" alt="RabbitMQ " />
+
 
 ### License
 
