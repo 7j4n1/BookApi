@@ -3,11 +3,9 @@ using BookApi.Cache;
 using BookApi.DataDTO;
 using BookApi.Models;
 using BookApi.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace BookApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

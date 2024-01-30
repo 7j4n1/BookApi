@@ -11,9 +11,9 @@ public class BookDTO
     public required int TotalPages { get; set; }
 
     [RegularExpression(@"^\d{3}-\d{10}$")]
-    public required string ISBN { get; set; }
+    public string? ISBN { get; set; }
 
-    public required DateOnly PublishedDate { get; set; }
+    public DateOnly? PublishedDate { get; set; }
 
     public required int AuthorId { get; set; }
 

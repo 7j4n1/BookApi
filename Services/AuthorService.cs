@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookApi.Services
 {
-    public class AuthorService(LibraryDBContext libraryDB) : IAuthorService
+    public class AuthorService(LibraryDBContext libraryDB) : IAuthorService, IAuthorHelper
     {
         private readonly LibraryDBContext _libraryDB = libraryDB;
 
@@ -88,7 +88,26 @@ namespace BookApi.Services
             return await task;
         }
 
+        /// <summary>
+        /// Checks if an author exists by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the author.</param>
+        /// <returns>True if the author exists, false otherwise.</returns>
+        public async Task<bool> IsAuthorExistById(int id)
+        {
+            // check if the id exists
+            var existingAuthor = await _libraryDB.Authors.FindAsync(id);
+
+            return existingAuthor is not null;
+        }
+
         // Update the author with the specified ID
+        /// <summary>
+        /// Updates an existing author with the specified ID.
+        /// </summary>
+        /// <param name="author">The updated author information.</param>
+        /// <param name="id">The ID of the author to update.</param>
+        /// <returns>The updated author if found, otherwise null.</returns>
         public async Task<Author?> UpdateAuthor(AuthorDTO author, int id)
         {
             // Find the author with the specified ID
@@ -111,8 +130,6 @@ namespace BookApi.Services
             await _libraryDB.SaveChangesAsync();
 
             return existingAuthor;
-
-
         }
     }
 }
