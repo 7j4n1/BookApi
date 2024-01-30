@@ -9,8 +9,16 @@ namespace BookApi
         private IDatabase? _redisDB;
         public CacheService()
         {
-
-            ConfigureRedis();
+            try
+            {
+                ConfigureRedis();
+            }
+            catch (System.Exception)
+            {
+                
+                throw new Exception("error establishing connection to redis server.");
+            }
+            
             
         }
 
