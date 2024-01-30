@@ -1,8 +1,9 @@
-﻿namespace BookApi.Models;
+﻿using BookApi.DataDTO;
 
-public class Publisher: BaseAttr
+namespace BookApi.Models;
+
+public class Publisher: PublisherDTO
 {
-    public required string Name { get; set; }
-
+    public int Id {get; set;}
     public required ICollection<Book> Books { get; set; }
 }
