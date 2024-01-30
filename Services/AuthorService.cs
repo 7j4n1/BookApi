@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
+using BookApi.DataDTO;
 using BookApi.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +15,23 @@ namespace BookApi.Services
         /// </summary>
         /// <param name="author">The author object to be added.</param>
         /// <returns>The added author object.</returns>
-        public async Task <Author?> AddAuthor(Author author)
+        public async Task <Author?> AddAuthor(AuthorDTO author)
         {
-            // check if the author id already exists
-            var existingAuthor = await _libraryDB.Authors.FindAsync(author.Id);
+            // since the ID is unique
+            // Check if the first name and last name does exist
 
+            var existingAuthor = await _libraryDB.Authors.FirstOrDefaultAsync(x => EF.Functions.Like(x.FirstName, author.FirstName) 
+                && EF.Functions.Like(x.LastName, author.LastName));
+            
             if (existingAuthor is not null)
             {
-                // throw new Exception("An author with the same ID already exists.");
+                // throw new Exception("An author with the same Name already exists.");
                 return null;
             }
-            // if id does not exist, Add the author Info to DB
+
+
+            // if name does not exist, Add the author Info to DB
             var newAuthor = new Author() {
-                Id = author.Id,
                 FirstName = author.FirstName,
                 LastName = author.LastName,
                 Bio = author.Bio
@@ -69,8 +74,7 @@ namespace BookApi.Services
         public async Task<Author?> GetAuthorById(int id)
         {
             // fetch Author with the specified ID
-            return await _libraryDB.Authors.FindAsync(id);
-
+            return await _libraryDB.Authors.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         /// <summary>
@@ -85,10 +89,10 @@ namespace BookApi.Services
         }
 
         // Update the author with the specified ID
-        public async Task<Author?> UpdateAuthor(Author author)
+        public async Task<Author?> UpdateAuthor(AuthorDTO author, int id)
         {
             // Find the author with the specified ID
-            var existingAuthor = await _libraryDB.Authors.FindAsync(author.Id);
+            var existingAuthor = await _libraryDB.Authors.FirstOrDefaultAsync(x => x.Id == id);
             // If the author was not found, return null
             if (existingAuthor is null)
             {
@@ -96,16 +100,17 @@ namespace BookApi.Services
             }
 
             // Update the author's properties
-            existingAuthor.FirstName = author.FirstName;
-            existingAuthor.LastName = author.LastName;
-            existingAuthor.Bio = author.Bio;
+            existingAuthor.FirstName = string.IsNullOrEmpty(author.FirstName) ? existingAuthor.FirstName : author.FirstName;
+            existingAuthor.LastName =  string.IsNullOrEmpty(author.LastName) ? existingAuthor.LastName : author.LastName;
+            existingAuthor.Bio = string.IsNullOrEmpty(author.Bio) ? existingAuthor.Bio : author.Bio;;
 
-            var result = _libraryDB.Authors.Update(existingAuthor);
+            _libraryDB.Entry(existingAuthor).State = EntityState.Modified;
+            // var result = _libraryDB.Authors.Update(existingAuthor);
 
             // Save the changes to the database
             await _libraryDB.SaveChangesAsync();
 
-            return result.Entity;
+            return existingAuthor;
 
 
         }

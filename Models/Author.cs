@@ -1,13 +1,10 @@
-﻿namespace BookApi.Models;
+﻿using BookApi.DataDTO;
 
-public class Author: BaseAttr
+namespace BookApi.Models;
+
+public class Author: AuthorDTO
 {
-    public required string FirstName { get; set; }
-
-    public string? LastName { get; set; }
-
-    public string? Bio {get; set;}
-
+    public int Id {get; set;}
     public ICollection<Book>? Books { get; set; }
 
 }
