@@ -14,7 +14,7 @@ namespace BookApi {
                 // Port = 5671,
                 // UserName = "admin",
                 // Password = "xTFlgoEdfzfeQT1cn7zRWvLYDJeESbHk",
-                Uri = new Uri("amqps://admin:xTFlgoEdfzfeQT1cn7zRWvLYDJeESbHk@u9v0uc.stackhero-network.com:5671")
+                Uri = new Uri(ConfigurationManager.AppSetting["RabbitMqUrl"])
             };
 
             var connection = factory.CreateConnection();
