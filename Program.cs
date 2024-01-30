@@ -29,6 +29,10 @@ public class Program()
         builder.Services.AddScoped<IPublisherHelper, PublisherService>();
         builder.Services.AddScoped<IPublisherService, PublisherService>();
         builder.Services.AddScoped<IMessageProducer, RabbitMQProducer>();
+        builder.Services.AddSingleton<IMessageStorageService, MessageStorageService>();
+
+        // Register the background service
+        builder.Services.AddHostedService<MessageQueueConsumer>();
 
         builder.Services.Configure<RequestLocalizationOptions>(options =>
         {
