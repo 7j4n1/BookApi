@@ -7,7 +7,7 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace BookApi
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class BooksController: ControllerBase
     {
@@ -67,11 +67,6 @@ namespace BookApi
             {
                 var filteredPublisher = getCacheData.Where(x => x.Id == id).FirstOrDefault();
 
-                // construct message and book info to send to subscribers
-                    var newMessage = new SubscriberMapper("[+] New book has been published", filteredPublisher);
-                    // broadcast message
-                    _messageProducer.SendMessage(newMessage);
-
                 return Ok(filteredPublisher);
             }
 
@@ -81,10 +76,7 @@ namespace BookApi
             if (getData != null)
             {
                 _ = _cacheService.SetData<Book>("book", getData, expirationTime);
-                // construct message and book info to send to subscribers
-                    var newMessage = new SubscriberMapper("[+] New book has been published", getData);
-                    // broadcast message
-                    _messageProducer.SendMessage(newMessage);
+                
                 return Ok(getData);
             }
             
@@ -155,10 +147,10 @@ namespace BookApi
                 {
                     // Send Broker Message to Queue channel 
 
-                    // // construct message and book info to send to subscribers
-                    // var newMessage = new SubscriberMapper("[+] New book has been published", result);
-                    // // broadcast message
-                    // _messageProducer.SendMessage(newMessage);
+                    // construct message and book info to send to subscribers
+                    var newMessage = new SubscriberMapper("[+] New book has been published", result);
+                    // broadcast message
+                    _messageProducer.SendMessage(newMessage);
 
 
                     return CreatedAtAction(nameof(GetBookById), new { id = result.Id}, result);
