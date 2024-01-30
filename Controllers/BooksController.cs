@@ -23,6 +23,10 @@ namespace BookApi
 
         }
 
+        /// <summary>
+        /// Retrieves a list of books.
+        /// </summary>
+        /// <returns>An ActionResult containing the list of books.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
@@ -46,6 +50,11 @@ namespace BookApi
             
         }
 
+        /// <summary>
+        /// Retrieves a book by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the book to retrieve.</param>
+        /// <returns>An ActionResult containing the book if found, or an error message if not found.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBookById(int id)
         {
@@ -106,7 +115,7 @@ namespace BookApi
                 };
             }
 
-            if (await _authorHelper.IsAuthorExistById(book.AuthorId)  )
+            if (! await _authorHelper.IsAuthorExistById(book.AuthorId)  )
             {
                 return new ObjectResult(new ApiError () {Message = $"Author Id ({book.AuthorId}) does not exist"})
                 {
@@ -114,7 +123,7 @@ namespace BookApi
                 };
             }
 
-            if (await _publisherHelper.IsPublisherExistById(book.PublisherId)  )
+            if (! await _publisherHelper.IsPublisherExistById(book.PublisherId)  )
             {
                 return new ObjectResult(new ApiError () {Message = $"Publisher Id ({book.PublisherId}) does not exist"})
                 {
@@ -150,6 +159,12 @@ namespace BookApi
             
         }
 
+        /// <summary>
+        /// Updates a book with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the book to update.</param>
+        /// <param name="book">The updated book information.</param>
+        /// <returns>An ActionResult representing the result of the update operation.</returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> PutBook(int id, BookDTO book)
         {
@@ -182,6 +197,11 @@ namespace BookApi
             
         }
 
+        /// <summary>
+        /// Deletes a book with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the book to delete.</param>
+        /// <returns>An ActionResult representing the result of the deletion operation.</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBook(int id)
         {

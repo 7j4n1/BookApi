@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BookApi.Models;
+using Microsoft.VisualBasic;
 
 namespace BookApi.DataDTO;
 
@@ -13,7 +14,7 @@ public class BookDTO
     [RegularExpression(@"^\d{3}-\d{10}$")]
     public string? ISBN { get; set; }
 
-    public DateOnly? PublishedDate { get; set; }
+    public string? PublishedDate { get; set; }
 
     public required int AuthorId { get; set; }
 

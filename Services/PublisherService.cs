@@ -85,12 +85,17 @@ namespace BookApi.Services
             return await task;
         }
 
+        /// <summary>
+        /// Checks if a publisher exists by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the publisher.</param>
+        /// <returns>True if the publisher exists, false otherwise.</returns>
         public async Task<bool> IsPublisherExistById(int id)
         {
             // check if the id exists
-            var existingAuthor = await _libraryDB.Authors.FindAsync(id);
+            var existingPublisher = await _libraryDB.Publishers.FindAsync(id);
 
-            return existingAuthor is not null;
+            return existingPublisher is not null;
         }
 
         /// <summary>

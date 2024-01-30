@@ -1,4 +1,5 @@
 ﻿using BookApi.DataDTO;
+using Newtonsoft.Json;
 
 namespace BookApi.Models
 {
@@ -6,8 +7,10 @@ namespace BookApi.Models
     {
         public int Id {get; set;}
         // One-One Relationship (a book to one publisher)
+        [JsonIgnore]
         public Publisher? Publisher { get; set; }
         // One-One Relationship (a book to one author)
+        [JsonIgnore]
         public Author? Author { get; set; }
     
     }

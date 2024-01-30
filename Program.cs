@@ -1,5 +1,6 @@
 
 using System.Globalization;
+using System.Text.Json.Serialization;
 using BookApi.Cache;
 using BookApi.Services;
 using Microsoft.AspNetCore.Localization;
@@ -42,9 +43,15 @@ public class Program()
             options.SupportedUICultures = supportedCultures;
         });
 
+
+
+
         
 
-        builder.Services.AddControllers();
+        // Add the necessary using directive for the AddNewtonsoftJson method
+        builder.Services.AddControllers().AddJsonOptions(Options => {
+            Options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
