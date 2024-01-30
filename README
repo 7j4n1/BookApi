@@ -26,7 +26,8 @@ Before you start, make sure you have the following prerequisites installed on yo
 ### Installation
 
 1. Clone this repository:
-
+    Open a terminal and run 
+    
    ```bash
    git clone https://github.com/7j4n1/BookApi.git
    cd BookApi 
@@ -50,8 +51,8 @@ Before you start, make sure you have the following prerequisites installed on yo
         "DefaultConnection" : "Data Source=mssql-servername;Initial Catalog=database-name;User ID=username;Password=password;TrustServerCertificate=true;"
     }
     ```
-    And kindly ensure that you've started them 3 servers
-4. Run the migrations:
+4. Ensure that you've started them 3 servers (Redis, SQL Server, RabbitMQ)
+5. Run the migrations:
     ```bash
     dotnet build
 
@@ -59,14 +60,14 @@ Before you start, make sure you have the following prerequisites installed on yo
 
     dotnet-ef database update  - to update the database with the Api Models
     ```
-5. Start the development server:
+6. Start the development server:
     ```bash
     dotnet run | dotnet run --launch-profile https (To force run on https scheme)
 
     ```
     BookApi API is now up and running on {https://localhost:7057} which is the base url!
 
-    To see the Api enpoints with Swagger UI, navigate to https://localhost:7057/swagger
+7. Open a browser and navigate to https://localhost:7057/swagger to see an API documentation
 
 ### API Endpoints
 
