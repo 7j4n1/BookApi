@@ -23,6 +23,10 @@ public class Program()
         builder.Services.AddDbContext<LibraryDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         builder.Services.AddScoped<ICacheService, CacheService>();
         builder.Services.AddScoped<IAuthorService, AuthorService>();
+        builder.Services.AddScoped<IAuthorHelper, AuthorService>();
+        builder.Services.AddScoped<IBookService, BookService>();
+        builder.Services.AddScoped<IPublisherHelper, PublisherService>();
+        builder.Services.AddScoped<IPublisherService, PublisherService>();
 
         builder.Services.Configure<RequestLocalizationOptions>(options =>
         {

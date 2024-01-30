@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookApi
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BooksController: ControllerBase
     {
         private readonly IBookService _bookService;
@@ -45,7 +47,7 @@ namespace BookApi
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Publisher>> GetBookById(int id)
+        public async Task<ActionResult<Book>> GetBookById(int id)
         {
             var getCacheData = _cacheService.GetData<IEnumerable<Book>>("book");
 
@@ -66,7 +68,7 @@ namespace BookApi
             }
             
             // return NotFound("No Book with the id found.");
-            return new ObjectResult(new ApiError () {Message = "No Publisher with the id found."})
+            return new ObjectResult(new ApiError () {Message = "No Book with the id found."})
             {
                 StatusCode = StatusCodes.Status404NotFound
             };
@@ -78,7 +80,7 @@ namespace BookApi
         /// <param name="book">The book data to be added.</param>
         /// <returns>An ActionResult containing the created book if successful, or an error message if unsuccessful.</returns>
         [HttpPost]
-        public async Task<ActionResult<Book>> PostPublisher(BookDTO book)
+        public async Task<ActionResult<Book>> PostBook(BookDTO book)
         {
             if (string.IsNullOrEmpty(book.Title))
             {
@@ -176,7 +178,7 @@ namespace BookApi
                 return BadRequest("Failed to update Book info.");
             }
 
-            return BadRequest($"Book id {id} specified is not found.");
+            return NotFound($"Book id {id} specified is not found.");
             
         }
 

@@ -56,6 +56,7 @@ namespace BookApi.Controllers
 
             var expirationTime = DateTimeOffset.Now.AddMinutes(5.0);
             var getData = await _publisherService.GetPublisherById(id);
+            Console.WriteLine(getData);
             // set the data into cache
             if (getData != null)
             {
@@ -65,9 +66,9 @@ namespace BookApi.Controllers
             
             // return NotFound("No Publisher with the id found.");
             return new ObjectResult(new ApiError () {Message = "No Publisher with the id found."})
-                {
-                    StatusCode = StatusCodes.Status400BadRequest
-                };
+            {
+                StatusCode = StatusCodes.Status404NotFound
+            };
         }
 
         [HttpPost]
